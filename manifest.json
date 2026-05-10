@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+  "name": "Privacy Monitor",
+  "version": "1.0",
+  "description": "Detecta rastreamento e ameaças à privacidade na navegação web",
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "cookies",
+    "storage",
+    "tabs",
+    "activeTab",
+    "<all_urls>"
+  ],
+  "data_collection_permissions": {
+    "collect_technical_and_interaction_data": false,
+    "collect_personally_identifying_info": false
+  },
+  "background": {
+    "scripts": ["privacy_monitor.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "Privacy Monitor"
+  }
+}
