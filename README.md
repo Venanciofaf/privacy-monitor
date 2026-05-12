@@ -212,15 +212,21 @@ O score nunca fica abaixo de zero.
 
 ### Justificativa dos pesos
 
-**Domínios de terceira parte (−2 cada, máx −40):** o peso individual é baixo porque sites legítimos podem carregar dezenas de recursos externos (CDNs, fontes, imagens). O limite máximo evita que o score zere apenas por essa categoria — um site com 100 domínios sofre o mesmo desconto de um com 20.
+A metodologia segue princípios consolidados de ferramentas de privacidade reconhecidas, particularmente o **Privacy Badger** da EFF (Electronic Frontier Foundation) e o **Tracker Radar** da DuckDuckGo. Ambos adotam uma abordagem em camadas onde diferentes vetores de rastreamento recebem pesos proporcionais ao risco que representam.
 
-**Hijacking (−3 cada, máx −20):** peso maior por categoria porque scripts suspeitos e redirecionamentos não autorizados representam **risco ativo** de segurança, não apenas rastreamento passivo.
+**Domínios de terceira parte (−2 cada, máx −40):** o peso individual é baixo porque sites legítimos podem carregar dezenas de recursos externos (CDNs, fontes, imagens). A abordagem segue o princípio do Privacy Badger: nem todo domínio externo é necessariamente um tracker. O limite máximo de −40 evita que o score zere apenas por essa categoria.
 
-**Fingerprinting (−10 sem limite):** fingerprinting é o vetor mais agressivo — cria identificadores persistentes que **sobrevivem à limpeza de cookies**. A ausência de limite permite que sites com múltiplas APIs de fingerprinting sejam penalizados severamente.
+**Hijacking (−3 cada, máx −20):** peso maior por categoria porque scripts suspeitos e redirecionamentos não autorizados representam **risco ativo** de segurança, alinhado com a classificação OWASP que coloca XSS e injeção entre as top 10 ameaças web.
 
-**Cookies de terceira parte (−2 cada, máx −15):** apesar da depreciação anunciada, ainda são amplamente usados para cookie syncing. Peso moderado por serem um vetor "tradicional" e bem conhecido.
+**Fingerprinting (−10 sem limite):** fingerprinting é o vetor mais agressivo segundo estudo da Mozilla sobre rastreamento moderno — cria identificadores persistentes que **sobrevivem à limpeza de cookies e ao modo privativo**. A ausência de limite permite que sites com múltiplas APIs de fingerprinting sejam penalizados severamente.
 
-**Storage abusivo (−5 fixo se >20 itens):** detecta sites que abusam de `localStorage`/`sessionStorage` como substitutos persistentes para cookies. Penalidade fixa porque o impacto é binário — ou o site usa storage abusivamente ou não.
+**Cookies de terceira parte (−2 cada, máx −15):** apesar da depreciação anunciada pelos principais browsers, ainda são amplamente usados para cookie syncing. Peso moderado porque o impacto isolado é menor que fingerprinting.
+
+**Supercookies (−5 cada, máx −25):** peso elevado por categoria porque supercookies (HSTS persistentes e ETags compartilhados entre domínios) são especificamente projetados para **contornar a limpeza tradicional** de cookies. Detecção alinhada com pesquisa de Acar et al. (2014) sobre "The Web Never Forgets: Persistent Tracking Mechanisms in the Wild". O limite máximo evita zeragem automática mantendo o vetor com importância significativa.
+
+**Storage abusivo (−5 fixo se >20 itens):** detecta sites que abusam de `localStorage`/`sessionStorage` como substitutos persistentes para cookies. Threshold de 20 itens baseado em análise empírica — sites legítimos raramente excedem esse limite.
+
+
 
 ---
 
