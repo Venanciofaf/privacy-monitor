@@ -1,9 +1,6 @@
-Extensão validada em ambiente controlado
-
 # Privacy Monitor — Extensão Firefox para Detecção de Rastreamento
 
 > **Roteiro 4 — Insper | Prof. João Eduardo**
-> Extensão WebExtension para Firefox que detecta e apresenta ao usuário os principais vetores de rastreamento e violação de privacidade presentes na navegação web moderna.
 
 ---
 
